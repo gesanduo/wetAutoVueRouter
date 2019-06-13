@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/panio123/vue-auto-routes-webpack-plugin.git"
+    "url": "git+https://github.com/gesanduo/wetAutoVueRouter.git"
   },
   "keywords": [
     "vue-router",
@@ -21,15 +21,9 @@
   "author": "gesanduo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/panio123/vue-auto-routes-webpack-plugin/issues"
+    "url": "https://github.com/gesanduo/wetAutoVueRouter/issues"
   },
-  "homepage": "https://github.com/panio123/vue-auto-routes-webpack-plugin#readme",
-  "devDependencies": {
-    "@vue/component-compiler-utils": "^2.6.0",
-    "chokidar": "^2.1.2",
-    "deep-diff": "^1.0.2",
-    "vue-template-compiler": "^2.6.8"
-  },
+  "homepage": "https://github.com/gesanduo/wetAutoVueRouter#readme",
   "eslintConfig": {
     "root": true,
     "env": {
@@ -45,6 +39,10 @@
     }
   },
   "dependencies": {
-    "vue-router": "^3.0.2"
+    "vue-router": "^3.0.2",
+    "@vue/component-compiler-utils": "^2.6.0",
+    "chokidar": "^2.1.2",
+    "deep-diff": "^1.0.2",
+    "vue-template-compiler": "^2.6.8"
   }
 }
