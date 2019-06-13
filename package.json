@@ -1,0 +1,50 @@
+{
+  "name": "wet-auto-vue-router-webpack-plugin",
+  "version": "1.0.0",
+  "description": "vue auto routes webpack plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panio123/vue-auto-routes-webpack-plugin.git"
+  },
+  "keywords": [
+    "vue-router",
+    "vue",
+    "autoRoute",
+    "router",
+    "routes",
+    "vue"
+  ],
+  "author": "gesanduo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/panio123/vue-auto-routes-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/panio123/vue-auto-routes-webpack-plugin#readme",
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^2.6.0",
+    "chokidar": "^2.1.2",
+    "deep-diff": "^1.0.2",
+    "vue-template-compiler": "^2.6.8"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "dependencies": {
+    "vue-router": "^3.0.2"
+  }
+}
