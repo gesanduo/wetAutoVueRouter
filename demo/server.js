@@ -75,8 +75,14 @@ class WetAutoVueRouter {
   start(){
     this.routes = []; // 初始化路由配置
     this.files = {};
-    this.getRoutesByDir();
-    this.output();
+    let entries = fs.readdirSync(this.config.entry);
+    entries.map(item=>{
+      if(this.config.ignoreDir.indexOf(item)===-1){
+        console.log(`${this.config.entry}/${item}/${this.config.vueOfEntry}`);
+        this.getRoutesByDir(`${this.config.entry}/${item}/${this.config.vueOfEntry}`);
+      }
+      this.output(`${this.config.entry}/${item}`);
+    });
   }
   // 生成routes
   getRoutesByDir(dir=this.config.entry,nowDir=''){
@@ -85,22 +91,21 @@ class WetAutoVueRouter {
       if(this.config.ignoreDir.indexOf(item)===-1){
         let route = {};
         if(this.isDir(`${dir}/${item}`)){ // 文件夹则递归里面的vue文件
-          // route = this.getOneRoute(item,nowDir,true);
           const newDir = `${nowDir}/${item}`;
           this.getRoutesByDir(`${dir}/${item}`,newDir);
         }else if(this._isVue(item)){
-          route = this.getOneRoute(item,nowDir);
+          route = this.getOneRoute(item,nowDir,`${dir}/${item}`);
           this.routes.push(route);
         }
       }
     })
   }
   // 生成一个router对象
-  getOneRoute(fileName,dir,flag){
+  getOneRoute(fileName,dir,fullpath){
     let name = fileName;
     let route;
     name = fileName.split('.')[0];
-    route = this.parseRouteConfig(`${this.config.entry}${dir}/${fileName}`); // 获取路由配置
+    route = this.parseRouteConfig(fullpath); // 获取路由配置
     this.files[`${this.config.entry}${dir}/${fileName}`] = route;
     if(!route.path){ // 如果本身没有配置path则根据文件路径生成路由，如果文件名以_开头，就生成/:这种路由，比如detail/_id.vue路由就是detail/:id
       if(name.indexOf('_')===0){
@@ -114,7 +119,10 @@ class WetAutoVueRouter {
     if(!route.name){
       route.name = name;
     }
-    route.component = `()=> import('${this.config.entry}${dir}/${fileName}')`
+    if(!route.chunk){ 
+      route.chunk = route.name;
+    }
+    route.component = `()=> import(/* webpackChunkName: ${route.chunk} */ '${fullpath}')`
     return route;
   }
   // 判断修改的vue文件有没有修改$$route属性
@@ -200,10 +208,11 @@ class WetAutoVueRouter {
     return endingIndex ? data.slice(begingIndex, endingIndex) : '';
   }
   // 输出文件
-  output(){
+  output(dir){
     let str = JSON.stringify(this.routes);
     str = str.replace(/"(\(\)=> import.*?vue'\))"/g,'$1\n');
-    fs.writeFileSync(this.config.output, `export default ${str}`);
+    str = str.replace(/webpackChunkName: (.*)?\*/g,'webpackChunkName: "$1" *');
+    fs.writeFileSync(`${dir}/${this.config.output}`, `export default ${str}`);
   }
 }
 

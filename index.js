@@ -13,7 +13,8 @@ class WetAutoVueRouter {
     const defaultConfig = {
       rootComponent: '',
       ignoreDir: 'components',
-      propsKeyName: '$$route'
+      propsKeyName: '$$route',
+
     };
     this.routes = []; // 路由配置
     this.files = {}; // 保存vue文件的$$route的配置
