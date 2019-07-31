@@ -77,11 +77,15 @@ class WetAutoVueRouter {
     this.files = {};
     let entries = fs.readdirSync(this.config.entry);
     entries.map(item=>{
-      if(this.config.ignoreDir.indexOf(item)===-1){
-        console.log(`${this.config.entry}/${item}/${this.config.vueOfEntry}`);
-        this.getRoutesByDir(`${this.config.entry}/${item}/${this.config.vueOfEntry}`);
-      }
-      this.output(`${this.config.entry}/${item}`);
+      // 判断文件夹是否存在，或者是否忽略
+      fs.exists(`${this.config.entry}/${item}/${this.config.vueOfEntry}`,(res)=>{
+        if(res && this.config.ignoreDir.indexOf(item)===-1){
+          console.log(`${this.config.entry}/${item}/${this.config.vueOfEntry}`);
+          this.getRoutesByDir(`${this.config.entry}/${item}/${this.config.vueOfEntry}`);
+          this.output(`${this.config.entry}/${item}`);
+        }
+      })
+      
     });
   }
   // 生成routes
